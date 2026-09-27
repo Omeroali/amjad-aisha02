@@ -648,9 +648,7 @@ export default function Invitation() {
       text-center
     "
     dir="rtl"
-  >
-أمنياتنا لأطفالكم أحلامًا سعيدة
-  </span>
+  >  </span>
 </div>
 
   {/* Decorative bottom */}
