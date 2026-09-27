@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { MapPin, UserCheck, CalendarCheck, Navigation } from "lucide-react";
 import Countdown from "./Countdown";
@@ -9,7 +9,53 @@ import RSVPModal from "./RSVPModal";
 import Guestbook from "./Guestbook";
 
 export default function Invitation() {
+
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
+
+    useEffect(() => {
+    let animationFrame: number;
+    let stopped = false;
+
+    const stopAutoScroll = () => {
+      stopped = true;
+      cancelAnimationFrame(animationFrame);
+    };
+
+    const autoScroll = () => {
+      if (stopped) return;
+
+      window.scrollBy(0, 1.4);
+
+      const reachedBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 5;
+
+      if (!reachedBottom) {
+        animationFrame = requestAnimationFrame(autoScroll);
+      }
+    };
+
+    const startTimer = window.setTimeout(() => {
+      animationFrame = requestAnimationFrame(autoScroll);
+    }, 800);
+
+    window.addEventListener("wheel", stopAutoScroll, { passive: true });
+    window.addEventListener("touchstart", stopAutoScroll, { passive: true });
+    window.addEventListener("touchmove", stopAutoScroll, { passive: true });
+    window.addEventListener("pointerdown", stopAutoScroll, { passive: true });
+    window.addEventListener("keydown", stopAutoScroll);
+
+    return () => {
+      window.clearTimeout(startTimer);
+      cancelAnimationFrame(animationFrame);
+
+      window.removeEventListener("wheel", stopAutoScroll);
+      window.removeEventListener("touchstart", stopAutoScroll);
+      window.removeEventListener("touchmove", stopAutoScroll);
+      window.removeEventListener("pointerdown", stopAutoScroll);
+      window.removeEventListener("keydown", stopAutoScroll);
+    };
+  }, []);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
