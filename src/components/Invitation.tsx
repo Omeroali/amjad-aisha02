@@ -489,7 +489,7 @@ export default function Invitation() {
           <p className="font-arabic text-lg sm:text-2xl text-brand-primary font-medium mb-8 leading-relaxed max-w-lg px-4">
             بكل الحب ننتظركم لتشاركونا فرحتنا يوم الخميس 15 اكتوبر 2026
             <br />
-            في قاعة الماسة البيضاء.
+            في قاعة الماسة البيضاء - المدينة المنورة.
           </p>
 
           {/* Map */}
