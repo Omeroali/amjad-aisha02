@@ -26,7 +26,7 @@ export default function Invitation({ isOpened }: { isOpened: boolean }) {
   const autoScroll = () => {
     if (stopped) return;
 
-    window.scrollBy(0, 1.2);
+    window.scrollBy(0, 1.1);
 
     const reachedBottom =
       window.innerHeight + window.scrollY >=
