@@ -51,7 +51,6 @@ export default function App() {
 
   // اختبار اتصال Supabase
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
 
     const testSupabaseConnection = async () => {
       const { error } = await supabase
