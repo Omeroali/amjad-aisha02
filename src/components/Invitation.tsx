@@ -8,54 +8,53 @@ import InteractiveCalendar from "./InteractiveCalendar";
 import RSVPModal from "./RSVPModal";
 import Guestbook from "./Guestbook";
 
-export default function Invitation() {
+export default function Invitation({ isOpened }: { isOpened: boolean }) {
 
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
 
-    useEffect(() => {
-    let animationFrame: number;
-    let stopped = false;
+   useEffect(() => {
+  if (!isOpened) return;
 
-    const stopAutoScroll = () => {
-      stopped = true;
-      cancelAnimationFrame(animationFrame);
-    };
+  let animationFrame: number;
+  let stopped = false;
 
-    const autoScroll = () => {
-      if (stopped) return;
+  const stopAutoScroll = () => {
+    stopped = true;
+    cancelAnimationFrame(animationFrame);
+  };
 
-      window.scrollBy(0, 1.4);
+  const autoScroll = () => {
+    if (stopped) return;
 
-      const reachedBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 5;
+    window.scrollBy(0, 1.4);
 
-      if (!reachedBottom) {
-        animationFrame = requestAnimationFrame(autoScroll);
-      }
-    };
+    const reachedBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 5;
 
-    const startTimer = window.setTimeout(() => {
+    if (!reachedBottom) {
       animationFrame = requestAnimationFrame(autoScroll);
-    }, 800);
+    }
+  };
 
-    window.addEventListener("wheel", stopAutoScroll, { passive: true });
-    window.addEventListener("touchstart", stopAutoScroll, { passive: true });
-    window.addEventListener("touchmove", stopAutoScroll, { passive: true });
-    window.addEventListener("pointerdown", stopAutoScroll, { passive: true });
-    window.addEventListener("keydown", stopAutoScroll);
+  animationFrame = requestAnimationFrame(autoScroll);
 
-    return () => {
-      window.clearTimeout(startTimer);
-      cancelAnimationFrame(animationFrame);
+  window.addEventListener("wheel", stopAutoScroll, { passive: true });
+  window.addEventListener("touchstart", stopAutoScroll, { passive: true });
+  window.addEventListener("touchmove", stopAutoScroll, { passive: true });
+  window.addEventListener("pointerdown", stopAutoScroll, { passive: true });
+  window.addEventListener("keydown", stopAutoScroll);
 
-      window.removeEventListener("wheel", stopAutoScroll);
-      window.removeEventListener("touchstart", stopAutoScroll);
-      window.removeEventListener("touchmove", stopAutoScroll);
-      window.removeEventListener("pointerdown", stopAutoScroll);
-      window.removeEventListener("keydown", stopAutoScroll);
-    };
-  }, []);
+  return () => {
+    cancelAnimationFrame(animationFrame);
+
+    window.removeEventListener("wheel", stopAutoScroll);
+    window.removeEventListener("touchstart", stopAutoScroll);
+    window.removeEventListener("touchmove", stopAutoScroll);
+    window.removeEventListener("pointerdown", stopAutoScroll);
+    window.removeEventListener("keydown", stopAutoScroll);
+  };
+}, [isOpened]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },

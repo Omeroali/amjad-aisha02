@@ -91,7 +91,7 @@ export default function App() {
 
       {isOpened && (
         <>
-          <Invitation />
+          <Invitation isOpened={isOpened} />
 
           <AudioPlayer
             isPlaying={isPlaying}
