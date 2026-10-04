@@ -60,13 +60,14 @@ function generateICSFile(): void {
   URL.revokeObjectURL(url);
 }
 export default function InteractiveCalendar() {
-  const [currentMonth, setCurrentMonth] = useState(8); // September (0-indexed)
-  const [currentYear, setCurrentYear] = useState(2026);
+  const today = new Date();
+
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [saved, setSaved] = useState(false);
 
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
   const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
-  const today = new Date();
 
   const navigateMonth = (direction: number) => {
     let newMonth = currentMonth + direction;
